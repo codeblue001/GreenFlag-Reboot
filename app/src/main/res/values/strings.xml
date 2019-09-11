@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Green Flag</string>
+    <string name="tag">GreenFlag Customers can create an account to access</string>
+    <string name="policy_information">Policy Information</string>
+    <string name="request_a_rescue_online">Request a rescue online</string>
+    <string name="car_health_updates">Car Health Updates</string>
+    <string name="app_branding">app branding</string>
+    <string name="email_address">Email address</string>
+    <string name="next">Next</string>
+    <string name="enter_your_email_address">Enter your email address</string>
+    <string name="create_a_password">create a password</string>
+    <string name="repeat_password">Repeat Password</string>
+    <string name="re_enter_password">re-enter password</string>
+    <string name="create_password">Create Password</string>
+    <string name="create_an_account2">Create an account</string>
+</resources>

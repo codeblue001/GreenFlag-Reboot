@@ -1,0 +1,13 @@
+1. added android:screenOrientation="portrait" so that the screen maintains the portrait style orientation
+
+
+
+
+
+
+
+ISSUES
+#1 app is crashing upon hitting next on the main activity
+
+Solution
+#1 the reason was because of the use of view instead of Viewrrrrr222
