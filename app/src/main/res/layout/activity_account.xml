@@ -9,7 +9,7 @@
     tools:context=".Account">
 
     <ImageView
-        android:id="@+id/leftChevronImageView"
+        android:id="@+id/backButtonImageView"
         android:layout_width="39dp"
         android:layout_height="39dp"
         android:layout_marginStart="16dp"
@@ -30,7 +30,7 @@
         android:textColor="#fff"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/leftChevronImageView"
+        app:layout_constraintStart_toEndOf="@+id/backButtonImageView"
         app:layout_constraintTop_toTopOf="parent" />
 
     <View

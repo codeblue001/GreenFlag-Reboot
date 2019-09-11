@@ -25,6 +25,7 @@ public class Account extends AppCompatActivity {
             "$");
 
     ImageView nextButton;
+    ImageView backButton;
     EditText textInputEmail, textInputPassword, textInputRepeatPassword, textInputUsername;
 
     @Override
@@ -35,6 +36,7 @@ public class Account extends AppCompatActivity {
         textInputEmail = findViewById(R.id.emailEditText);
         textInputPassword = findViewById(R.id.passwordlEditText);
         textInputRepeatPassword = findViewById(R.id.repeatPasswordEditText);
+        backButton = findViewById(R.id.backButtonImageView);
 
 
         nextButton = findViewById(R.id.nextButtonImageView);
@@ -48,6 +50,14 @@ public class Account extends AppCompatActivity {
                     Intent intent = new Intent(Account.this, Profile.class);
                     startActivity(intent);
                 }
+            }
+        });
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Account.this, MainActivity.class);
+                startActivity(intent);
             }
         });
     }

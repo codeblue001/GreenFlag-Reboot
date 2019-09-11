@@ -1,4 +1,8 @@
 1. added android:screenOrientation="portrait" so that the screen maintains the portrait style orientation
+2. add permission for camera intent
+    <!--CAMERA INTENT PERMISSION-->
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
 
 
@@ -10,4 +14,5 @@ ISSUES
 #1 app is crashing upon hitting next on the main activity
 
 Solution
-#1 the reason was because of the use of view instead of Viewrrrrr222
+#1 the reason was because of the use of view instead of View
+
