@@ -13,4 +13,17 @@
     <string name="re_enter_password">re-enter password</string>
     <string name="create_password">Create Password</string>
     <string name="create_an_account2">Create an account</string>
+
+    <string-array name="country">
+        <item>Choose a Country</item>
+        <item>Not-Specified</item>
+        <item>Malaysia</item>
+        <item>United States</item>
+        <item>Indonesia</item>
+        <item>France</item>
+        <item>Italy</item>
+        <item>Singapore</item>
+        <item>New Zealand</item>
+        <item>India</item>
+    </string-array>
 </resources>

@@ -13,24 +13,28 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.Adapter;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.text.DateFormat;
 import java.util.Calendar;
 
-public class Profile extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+public class Profile extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, AdapterView.OnItemSelectedListener {
     TextView ageTextView, genderTextView, addressTextView;
     EditText nameEditText, usernameEditText, passwordEditText;
     RadioGroup radioGroup;
-    RadioButton femaleChoice, maleChoice, unspecifiedChoice;
     Button birthDateButton, saveButton;
     ImageView profileImage, cameraButton;
+    Spinner spinner;
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
     @Override
@@ -40,7 +44,6 @@ public class Profile extends AppCompatActivity implements DatePickerDialog.OnDat
         profileImage = findViewById(R.id.profileImageView);
         ageTextView = findViewById(R.id.ageTextView);
         genderTextView = findViewById(R.id.genderTextView);
-        addressTextView = findViewById(R.id.addressEditText);
         nameEditText = findViewById(R.id.profileNameEditText);
         usernameEditText = findViewById(R.id.usernameEditText);
         passwordEditText = findViewById(R.id.passwordlEditText);
@@ -48,6 +51,7 @@ public class Profile extends AppCompatActivity implements DatePickerDialog.OnDat
         birthDateButton = findViewById(R.id.selectBirthDateButton);
         saveButton = findViewById(R.id.saveButton);
         cameraButton = findViewById(R.id.changePhotoButton);
+        spinner = findViewById(R.id.spinner);
 
         cameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,6 +89,13 @@ public class Profile extends AppCompatActivity implements DatePickerDialog.OnDat
                 genderTextView.setText(radioButton.getText());
             }
         });
+
+        //Todo set up spinner
+        //https://www.youtube.com/watch?v=on_OrrX7Nw4
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.country, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(this);
     }
 
     @Override
@@ -119,5 +130,15 @@ public class Profile extends AppCompatActivity implements DatePickerDialog.OnDat
         String ageS = ageInt.toString();
 
         ageTextView.setText(ageS);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long l) {
+        String text = parent.getItemAtPosition(position).toString();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 }
