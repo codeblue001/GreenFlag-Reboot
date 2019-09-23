@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#000"
     android:padding="8dp"
-    tools:context=".Database">
+    tools:context=".RegisteredUsersDatabase">
 
     <ImageView
         android:id="@+id/imageView2"

@@ -4,16 +4,15 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
-import android.Manifest;
 import android.app.DatePickerDialog;
+import android.content.ContentValues;
 import android.content.Intent;
-import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -24,11 +23,13 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.util.Calendar;
 
 public class Profile extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, AdapterView.OnItemSelectedListener {
+
     TextView ageTextView, genderTextView, addressTextView;
     EditText nameEditText, usernameEditText, passwordEditText;
     RadioGroup radioGroup;
@@ -36,6 +37,8 @@ public class Profile extends AppCompatActivity implements DatePickerDialog.OnDat
     ImageView profileImage, cameraButton;
     Spinner spinner;
     static final int REQUEST_IMAGE_CAPTURE = 1;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +49,7 @@ public class Profile extends AppCompatActivity implements DatePickerDialog.OnDat
         genderTextView = findViewById(R.id.genderTextView);
         nameEditText = findViewById(R.id.profileNameEditText);
         usernameEditText = findViewById(R.id.usernameEditText);
-        passwordEditText = findViewById(R.id.passwordlEditText);
+        passwordEditText = findViewById(R.id.profilePasswordEditText);
         radioGroup = findViewById(R.id.radioGroup);
         birthDateButton = findViewById(R.id.selectBirthDateButton);
         saveButton = findViewById(R.id.saveButton);
@@ -66,7 +69,40 @@ public class Profile extends AppCompatActivity implements DatePickerDialog.OnDat
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Profile.this, Database.class);
+                //Todo get Text
+                String name = nameEditText.getText().toString();
+                Log.i("EditText", name);
+                String username = usernameEditText.getText().toString();
+                Log.i("EditText", username);
+                String password = passwordEditText.getText().toString();
+                Log.i("EditText", password);
+                String age = ageTextView.getText().toString();
+                Log.i("EditText", age);
+                String country = spinner.getSelectedItem().toString();
+                Log.i("Spinner", country);
+                String gender = genderTextView.getText().toString();
+                Log.i("RadioButton", gender);
+
+                //Todo conditional for name, username, and password
+                //name, username, password
+                boolean isEmpty = false;
+                if (name.length() == 0 || username.length() == 0 || password.length() == 0 || age.length() == 0) {
+                    isEmpty = true;
+                }
+                //dob, gender, address
+                if (gender.equals("none") || country.equals("Not-Specified")) {
+                    isEmpty = true;
+                }
+                if (isEmpty) {
+                    String err_mes = "One or more empty fields exists";
+                    Toast.makeText(getApplicationContext(), err_mes, Toast.LENGTH_SHORT).show();
+                } else {
+                    //Toast to display user inputs
+                    addUsers(name, username, password, age, gender, country);
+                }
+
+                //Todo add intent to open next activity on click
+                Intent intent = new Intent(Profile.this, RegisteredUsersDatabase.class);
                 startActivity(intent);
             }
         });
@@ -140,5 +176,31 @@ public class Profile extends AppCompatActivity implements DatePickerDialog.OnDat
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
 
+    }
+
+    //Todo create database
+    public void addUsers(String name, String username, String password,String age, String gender, String country) {
+
+        //Instance will create the database when this activities oncreate method is called
+        DatabaseHelper dbHelper = new DatabaseHelper(Profile.this);// Create a new instance
+        SQLiteDatabase myDatabaseHelper = dbHelper.getWritableDatabase();
+
+        //use content value to add data int the database
+        ContentValues values = new ContentValues();
+        values.put(DatabaseUtil.TaskTable.nameColumn, name);
+        values.put(DatabaseUtil.TaskTable.userNameColumn, username);
+        values.put(DatabaseUtil.TaskTable.passwordColumn, password);
+//        values.put(DatabaseUtil.TaskTable.photoColumn, photo);
+        values.put(DatabaseUtil.TaskTable.ageColumn, age);
+//        values.put(DatabaseUtil.TaskTable.birthDateColumn, birthDate);
+        values.put(DatabaseUtil.TaskTable.countryColumn, country);
+        values.put(DatabaseUtil.TaskTable.genderColumn, gender);
+
+        if (myDatabaseHelper.insert(DatabaseUtil.TaskTable.TABLE_NAME, null, values) > 0) {
+            Toast.makeText(this, "User added successfully", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "ERROR: unable to add User to database", Toast.LENGTH_SHORT).show();
+        }
+        myDatabaseHelper.close();
     }
 }
