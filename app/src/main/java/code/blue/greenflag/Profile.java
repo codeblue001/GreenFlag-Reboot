@@ -30,12 +30,12 @@ import java.util.Calendar;
 
 public class Profile extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, AdapterView.OnItemSelectedListener {
 
-    TextView ageTextView, genderTextView, addressTextView;
+    TextView ageTextView, genderTextView;
     EditText nameEditText, usernameEditText, passwordEditText;
     RadioGroup radioGroup;
     Button birthDateButton, saveButton;
     ImageView profileImage, cameraButton;
-    Spinner spinner;
+    Spinner countrySpinner;
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
 
@@ -54,7 +54,7 @@ public class Profile extends AppCompatActivity implements DatePickerDialog.OnDat
         birthDateButton = findViewById(R.id.selectBirthDateButton);
         saveButton = findViewById(R.id.saveButton);
         cameraButton = findViewById(R.id.changePhotoButton);
-        spinner = findViewById(R.id.spinner);
+        countrySpinner = findViewById(R.id.spinner);
 
         cameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,7 +78,7 @@ public class Profile extends AppCompatActivity implements DatePickerDialog.OnDat
                 Log.i("EditText", password);
                 String age = ageTextView.getText().toString();
                 Log.i("EditText", age);
-                String country = spinner.getSelectedItem().toString();
+                String country = countrySpinner.getSelectedItem().toString();
                 Log.i("Spinner", country);
                 String gender = genderTextView.getText().toString();
                 Log.i("RadioButton", gender);
@@ -126,12 +126,12 @@ public class Profile extends AppCompatActivity implements DatePickerDialog.OnDat
             }
         });
 
-        //Todo set up spinner
+        //Todo set up countrySpinner
         //https://www.youtube.com/watch?v=on_OrrX7Nw4
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.country, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(this);
+        countrySpinner.setAdapter(adapter);
+        countrySpinner.setOnItemSelectedListener(this);
     }
 
     @Override
@@ -195,6 +195,8 @@ public class Profile extends AppCompatActivity implements DatePickerDialog.OnDat
 //        values.put(DatabaseUtil.TaskTable.birthDateColumn, birthDate);
         values.put(DatabaseUtil.TaskTable.countryColumn, country);
         values.put(DatabaseUtil.TaskTable.genderColumn, gender);
+
+        myDatabaseHelper.insert(DatabaseUtil.TaskTable.TABLE_NAME, null, values);
 
         if (myDatabaseHelper.insert(DatabaseUtil.TaskTable.TABLE_NAME, null, values) > 0) {
             Toast.makeText(this, "User added successfully", Toast.LENGTH_SHORT).show();

@@ -10,6 +10,7 @@ public class DatabaseUtil {
     public static final int DATABASE_VERSION = 1;
 
     public  class TaskTable implements BaseColumns{
+        //https://www.youtube.com/watch?v=5ISNPFmuOU8&t=23s
         public static final String TABLE_NAME = "registered_users";
         public static final String nameColumn = "name";
         public static final String userNameColumn = "username";
